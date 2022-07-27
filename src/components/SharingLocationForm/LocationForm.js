@@ -34,9 +34,7 @@ function LocationForm() {
   const [locationResponse, setLocationResponse] = useState([]);
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
   const toast = useToast();
-  const initialValues = {
-    locationType: "",
-  };
+  const initialValues = { locationType: "", locationName: "" };
   const [showLocationOptions, setShowLocationOptions] = useState(false);
   const [locationTitle, setLocationTitle] = useState("");
 
@@ -97,7 +95,7 @@ function LocationForm() {
     setShowLocationOptions(true);
     setLocationResponse(response.data.object);
   }
-  console.log(locationResponse);
+
   useEffect(() => {
     if (debouncedSearchQuery) {
       handleSearch();
@@ -124,9 +122,12 @@ function LocationForm() {
       onSubmit={onSubmit}
     >
       {(formik) => {
-        console.log(formik.values);
         return (
-          <Form onSubmit={formik.handleSubmit}>
+          <Form
+            onSubmit={(e) => {
+              formik.handleSubmit(e);
+            }}
+          >
             <VStack
               spacing={4}
               align="stretch"
@@ -211,35 +212,6 @@ function LocationForm() {
                             ))}
                           </Box>
                         ) : null}
-                        {/* <AutoComplete
-                          openOnFocus
-                          onChange={(_, item) => {
-                            setName(item.value);
-                            setLocationsValue({
-                              latlng: {
-                                lat: item.originalValue.lat,
-                                lng: item.originalValue.lng,
-                              },
-                            });
-                          }}
-                        >
-                          <AutoCompleteInput
-                            variant="filled"
-                            onChange={(e) => {
-                              setSearchQuery(e.target.value);
-                            }}
-                          />
-                          <AutoCompleteList>
-                            {locationResponse.map((item, i) => (
-                              <AutoCompleteItem
-                                key={`option-${i}`}
-                                value={item}
-                              >
-                                {item.tilte}
-                              </AutoCompleteItem>
-                            ))}
-                          </AutoCompleteList>
-                        </AutoComplete> */}
                       </FormControl>
                     </Flex>
                   </Box>

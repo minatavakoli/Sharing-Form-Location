@@ -4,11 +4,11 @@ import { useRecoilState } from "recoil";
 import { currentLocationMap } from "./atoms";
 
 export const SelectedLocation = (props) => {
-  const [currentLocation, setLocationsValue] =
+  const [currentLocation, setCurrentLocation] =
     useRecoilState(currentLocationMap);
 
   const map = useMap();
-  console.log(currentLocation.latlng);
+
   useEffect(() => {
     if (Object.keys(currentLocation).length) {
       if (map) {
@@ -16,9 +16,10 @@ export const SelectedLocation = (props) => {
       }
     }
   }, [currentLocation, map]);
+
   useMapEvents({
     click(e) {
-      setLocationsValue({ latlng: e.latlng });
+      setCurrentLocation({ latlng: e.latlng });
     },
   });
 
